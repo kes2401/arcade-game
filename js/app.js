@@ -9,7 +9,7 @@ var Enemy = function() {
     let rows = [50, 130, 210];
     this.x = -100;
     this.y = rows[Math.floor(Math.random() * 3)];
-    this.speed = Math.floor(Math.random() * 300) + 75;
+    this.speed = Math.floor(Math.random() * 300) + 100;
 
 };
 
@@ -39,7 +39,8 @@ const Player = function() {
 }
 
 Player.prototype.update = function() {
-    // checkCollision();
+    // this.checkCollision();
+    this.checkWin();
 }
 
 Player.prototype.render = function() {
@@ -65,39 +66,48 @@ Player.prototype.handleInput = function(direction) {
     }
 }
 
+// This function will check if the player has reached the water,
+// then increment score and reset to starting position
+Player.prototype.checkWin = function() {
+     if (this.y === -30) {
+        score++;
+        this.x = 200;
+        this.y = 370;
+        console.log("win!");
+    }   
+}
+
+// This function will check for collisions then reset player position
+Player.prototype.checkCollision = function() {
+    
+}
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
 const player = new Player();
+let score = 0;
 
 let allEnemies = [];
 
-newEmenies();
+newEmeny();
 
-// Create new enemy bugs every 3 seconds
-window.setInterval(function(){
-    newEmenies();
-}, 3000);
-
-function newEmenies() {
+function newEmeny() {
     // Create 3 new enemy bugs
-    const enemy1 = new Enemy();
-    const enemy2 = new Enemy();
-    const enemy3 = new Enemy();
-    allEnemies.push(enemy1);
-    allEnemies.push(enemy2);
-    allEnemies.push(enemy3);
+    const newEnemy = new Enemy();
+    allEnemies.push(newEnemy);
 
     // Limit size of allEnemies array to 9 elements
-    if (allEnemies.length === 9) {
-        for(let i = 0; i < 3; i++){
-            allEnemies.shift();
-        }        
+    if (allEnemies.length === 10) {
+        allEnemies.shift();
     }
 }
 
-
+// Create new enemy bugs every 3/4 seconds
+window.setInterval(function(){
+    newEmeny();
+}, 750);
 
 
 // This listens for key presses and sends the keys to your

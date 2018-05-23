@@ -74,12 +74,13 @@ Player.prototype.checkWin = function() {
         this.x = 200;
         this.y = 370;
         console.log("win!");
+        document.querySelector('.score').textContent = score;
     }   
 }
 
 // This function will check for collisions then reset player position
 Player.prototype.checkCollision = function() {
-    
+
 }
 
 // Now instantiate your objects.

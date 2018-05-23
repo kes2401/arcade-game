@@ -40,7 +40,22 @@ Player.prototype.render = function() {
 }
 
 Player.prototype.handleInput = function(direction) {
-
+    // Move player sprite Left
+    if (direction === 'left' && this.x > 0) {
+        this.x -= 100;
+    }
+    // Move player sprite Right
+    if (direction === 'right' && this.x < 400) {
+        this.x += 100;
+    }
+    // Move player sprite Up
+    if (direction === 'up' && this.y > -30) {
+        this.y -= 80;
+    }
+    // Move player sprite Down
+    if (direction === 'down' && this.y < 370) {
+        this.y += 80;
+    }
 }
 
 // Now instantiate your objects.

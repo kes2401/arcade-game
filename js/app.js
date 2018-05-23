@@ -2,12 +2,15 @@
 var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-    this.x = 200;
-    this.y = 210;
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    let rows = [50, 130, 210];
+    this.x = -100;
+    this.y = rows[Math.floor(Math.random() * 3)];
+    this.speed = Math.floor(Math.random() * 300) + 75;
+
 };
 
 // Update the enemy's position, required method for game
@@ -16,6 +19,8 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+
+    this.x += this.speed * dt;
 
 };
 
@@ -33,7 +38,9 @@ const Player = function() {
     this.sprite = 'images/char-boy.png';
 }
 
-Player.prototype.update = function() {}
+Player.prototype.update = function() {
+    // checkCollision();
+}
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -62,17 +69,34 @@ Player.prototype.handleInput = function(direction) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
+const player = new Player();
+
 let allEnemies = [];
 
-const enemy = new Enemy();
-/*const enemy1 = new Enemy();
-enemy1.x = 200;
-enemy1.y = 300;
-allEnemies.push(enemy1);*/
+newEmenies();
 
-allEnemies.push(enemy);
+// Create new enemy bugs every 3 seconds
+window.setInterval(function(){
+    newEmenies();
+}, 3000);
 
-const player = new Player();
+function newEmenies() {
+    // Create 3 new enemy bugs
+    const enemy1 = new Enemy();
+    const enemy2 = new Enemy();
+    const enemy3 = new Enemy();
+    allEnemies.push(enemy1);
+    allEnemies.push(enemy2);
+    allEnemies.push(enemy3);
+
+    // Limit size of allEnemies array to 9 elements
+    if (allEnemies.length === 9) {
+        for(let i = 0; i < 3; i++){
+            allEnemies.shift();
+        }        
+    }
+}
+
 
 
 

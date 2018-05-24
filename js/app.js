@@ -39,7 +39,7 @@ const Player = function() {
 }
 
 Player.prototype.update = function() {
-    // this.checkCollision();
+    this.checkCollision();
     this.checkWin();
 }
 
@@ -47,6 +47,7 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
+// Handle player movement
 Player.prototype.handleInput = function(direction) {
     // Move player sprite Left
     if (direction === 'left' && this.x > 0) {
@@ -71,16 +72,25 @@ Player.prototype.handleInput = function(direction) {
 Player.prototype.checkWin = function() {
      if (this.y === -30) {
         score++;
+        document.querySelector('.score').textContent = score;
         this.x = 200;
         this.y = 370;
-        console.log("win!");
-        document.querySelector('.score').textContent = score;
     }   
 }
 
-// This function will check for collisions then reset player position
+// This function will check for collisions then reset player position and decrement score
 Player.prototype.checkCollision = function() {
+    for (let i = 0; i < allEnemies.length; i++) {
+        if (this.y === allEnemies[i].y) {
+            if (this.x > (allEnemies[i].x - 50) && this.x < (allEnemies[i].x + 50)) {
+                score--;
+                document.querySelector('.score').textContent = score;
+                this.x = 200;
+                this.y = 370;                
+            }
 
+        }
+    }
 }
 
 // Now instantiate your objects.
